@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <title>Loginpage</title>
+  <!-- jquery -->
+   <script src='../jquery/jquery.js'></script>
+
+    <!-- Bootstrap core CSS -->
+       <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+      
+     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+     <link href="../bootstrap/dist/css/product.css" rel="stylesheet" id="product-css">  
+      
+</head>
+
+<style>
+.login-index {
+  border: 2px solid blue;
+  top: 70px;
+  height: 300px;
+  margin-top: 50px;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding-top: 30px;
+}
+
+.login-box{
+margin-left: 40px;
+height: 215px;
+padding-top:20px;
+}
+
+.mid-block {
+  top:10px;
+  
+  background-color: silver;
+  height: 400px;
+  width: 455px;
+  border: 1px solid black;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.mid-block-left {
+  margin-right: 10px;
+
+
+}
+
+.mid-block-right {
+  float: right;
+  margin-left: 10px;
+
+
+}
+
+.login-input {
+height: 50px;
+width: 400px;
+margin-bottom: 10px;
+}
+
+login-button {
+  width: 100px;
+
+}
+
+
+</style>
+
+<body>
+<header th:replace="/fragment/header :: header"> </header>
+
+<div class="container">
+  <div class="login-index">
+
+  <div class="col-sm-7 login-box">
+    <form action="/login/loginService" method="POST">
+    <div>
+      <input class="login-input" type="text" id="userId" name="userId" placeholder="userId">
+      <br>
+      <input class="login-input" type="password" id="userPassword" name="userPassword" placeholder="userPassword">  
+    </div>
+    <input  type="submit" class="btn btn-lg btn-primary btn-block login-button" style="width: 400px;" value="Login"/>
+  
+  </form>
+    <div>
+        <span th:if="${message} != null" style="color: #dc3545; font-weight: bold;"
+              th:text="${message}"></span>
+  </div>
+  </div>
+ 
+
+  </div>
+</div>
+
+  <br>
+
+<footer th:replace="/fragment/footer :: footer"> </footer>
+</body>
+</html>

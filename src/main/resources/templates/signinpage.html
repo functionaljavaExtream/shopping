@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+  <title>SignInpPage</title>
+  <!-- jquery -->
+   <script src='../jquery/jquery.js'></script>
+
+    <!-- Bootstrap core CSS -->
+       <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+      
+     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+     <link href="../bootstrap/dist/css/product.css" rel="stylesheet" id="product-css">  
+      
+</head>
+
+<style>
+.login-index {
+  border: 2px solid blue;
+  top: 70px;
+  height: 500px;
+  margin-top: 50px;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding-top: 30px;
+}
+
+.login-box{
+margin-left: 40px;
+height: 600px;
+padding-top:20px;
+}
+
+.mid-block {
+  top:10px;
+  
+  background-color: silver;
+  height: 400px;
+  width: 455px;
+  border: 1px solid black;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.mid-block-left {
+  margin-right: 10px;
+
+
+}
+
+.mid-block-right {
+  float: right;
+  margin-left: 10px;
+
+
+}
+
+.login-input {
+height: 50px;
+width: 400px;
+margin-bottom: 10px;
+}
+
+.login-button {
+  width: 100px;
+
+}
+
+.validateCheckBox {
+ margin: 0;
+}
+
+
+
+</style>
+
+<body>
+<header th:replace="/fragment/header :: header"> </header>
+
+<div class="container">
+  <div class="login-index">
+
+  <div class="col-sm-7 login-box">
+    <form action="/signIn/userInsert" method="POST">
+    <div>
+      <input class="login-input" type="text" id="userId" name="userId" placeholder="userId" onkeyup="userIdCheck(this.value)">
+      <h5 class="validateCheckBox" id="validateUserId" name="validateUserId" style="display: none; color:red;"></h5>
+      <br>
+      <input class="login-input" type="password" id="userPassword" name="userPassword" placeholder="userPassword">
+      <br>
+      <input class="login-input" type="text" id="userName" name="userName" placeholder="userName">  
+            <br>
+      <input class="login-input" type="text" id="userEmail" name="userEmail" placeholder="userEmail"> 
+    </div>
+    <input  type="submit" class="btn btn-lg btn-primary btn-block login-button" style="width: 400px;" id="signInButton" value="Sign In!"/>
+  
+  </form>
+
+  </div>
+ 
+
+  </div>
+</div>
+
+<footer th:replace="/fragment/footer :: footer"> </footer>
+  <br>
+<script>
+    window.onload = function() {
+    	console.log("window loaded")
+    	cleanWindow();
+	};
+
+  async function userIdCheck(v) {
+	    let validateUserId = document.getElementById("validateUserId");
+	    let signInButton = document.getElementById("signInButton");
+        if(v ==""|| v== null) {
+        	return;
+        }
+		fetch(`/signIn/validateUserId?userId=${v}`, {
+			    method: "GET",
+			  })
+			  .then(response => response.text())
+			  .then(data => {
+                   switch(data) {
+                     case "0" :
+      	                  validateUserId.innerText = "Invalid Id";
+    	                  validateUserId.style.display = "block";
+    	                  validateUserId.style.color = "red";
+    	                  signInButton.disabled = true;   	                  
+    	             break;
+    	              
+                     default :
+        	              validateUserId.innerText = "You Can use this Id";
+  	                      validateUserId.style.display = "block";
+  	                      validateUserId.style.color = "blue";
+  	                      signInButton.disabled = false;   
+  	                 break;
+    	           }
+			       })
+  }
+
+  
+  function cleanWindow() {
+	  document.getElementById("userId").value = "";
+	  document.getElementById("userName").value = "";
+	  document.getElementById("userPassword").value = "";
+	  document.getElementById("userEmail").value = "";
+	  document.getElementById("validateUserId").innerHTML = "";	  
+  }
+
+</script>
+
+
+</body>
+</html>

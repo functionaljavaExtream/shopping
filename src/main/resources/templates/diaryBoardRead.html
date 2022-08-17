@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/product/# -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>BoardRead</title>
+
+<!-- include libraries(jQuery, bootstrap) -->
+<!-- jquery -->
+
+<script src='../jquery/jquery.js'></script>
+
+<!-- Bootstrap core CSS -->
+<script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+
+<link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"
+	id="bootstrap-css">
+<link href="../bootstrap/dist/css/product.css" rel="stylesheet"
+	id="product-css">
+
+<!-- include summernote css/js-->
+<link
+	href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+
+</head>
+
+
+<style>
+.main-index {
+	background-color: gray;
+	height: 100px;
+}
+
+.mid-block {
+	top: 10px;
+	background-color: silver;
+	height: 400px;
+	width: 455px;
+	border: 1px solid black;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.mid-block-left {
+	margin-right: 10px;
+}
+
+.mid-block-right {
+	float: right;
+	margin-left: 10px;
+}
+
+.board-block {
+	top: 10px;
+	background-color: silver;
+	border: 1px solid black;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.hr-marginNone {
+	margin: 0;
+}
+
+.writebutton {
+	float: right;
+	font-size: 20px;
+	margin-top: 15px;
+}
+
+.textbox {
+    min-height: 500px;
+}
+
+
+
+.textDate::before {
+	content: "";
+	display: inline-block;
+	width: 1px;
+	height: 12px;
+	background: #ccc;
+	margin: 0 10px 0 6px;
+	vertical-align: -2px;
+}
+
+.floatRigth {
+	float: right;
+}
+
+.replyBox {
+	height: 150px;
+	border-top: 2px solid blue;
+	border-bottom: 2px solid blue;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: silver;
+	margin-top: 10px;	
+}
+
+.replyBoxRead {
+   border-top: 2px solid blue;
+   padding-top: 10px;
+   padding-bottom: 10px;
+   margin-top: 10px;	
+}
+
+
+
+.replyBox-writer {
+
+height: 35px;
+border: 1px solid black;
+margin-right: 20px;
+margin-left: 20px;
+background-color: white;
+}
+.replyBox-content {
+
+  height: 100px;
+  border: 1px solid black;
+}
+
+.replyBox-control {
+margin-top: 5px;
+height: 30px;
+float: right;
+}
+
+.replyBoxReadfragment {
+ height: 20px;
+}
+
+</style>
+
+
+
+
+<body>
+	<header th:replace="/fragment/header :: header"> </header>
+
+
+	<div class="container">
+		<div class="main-index">
+			<h1 class="">Welcome!</h1>
+			<p class="">Welcome to my board!</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<form method="post" action="/diaryBoard/modify">
+
+
+			<div class="row" style="margin: auto;" id="titleBox">
+				<h3 type="text" style="font-size: x-large" id="title" name="title"
+					th:text="${mstDiary.diaryTitle}"></h3>
+				<input type="text"
+					style="font-size: x-large; border: 1px solid black; display: none;"
+					id="titleModify" name="titleModify" th:value="${mstDiary.diaryTitle}">
+			</div>
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="col-sm-2" type="text" id="writer" name="writer"
+						th:text="${mstDiary.writer.userId}"></div>
+					<div class="textDate col-sm-8" id="textDate" name="textDate"
+						th:text="${#strings.substring(mstDiary.updateDatetime,2,19)}"></div>
+				</div>
+				<div class="col-sm-4">
+					<div class="row">
+						<div class="col-sm-4" id="viewCount" name="viewCount"
+							th:text="'조회수 :' + ${mstDiary.viewCount}"></div>
+					</div>
+
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<hr style="margin-top: 1px; margin-bottom: 10px;">
+				<input hidden id="diaryCd" name="diaryCd" th:value="${mstDiary.diaryCd}">
+			</div>
+			<div id="textArea" style="margin: auto;">
+				<div class="textbox" id="textBox" th:utext="${mstDiary.diaryContents}"></div>
+				<textarea style="display: none" id="textBoxArea" name="content"
+					th:utext="${mstDiary.diaryContents}"></textarea>
+
+				<div th:if="${user}">
+					<div th:if="${user.userId == mstDiary.writer.userId}">
+						<input name="firstButtons" type="button" value="글 삭제" style="float: right;" onclick="deleteText()" /> 
+						<input name="firstButtons" type="button" value="글 수정" style="float: right;" onclick="modifyText()" /> 
+						<input name="secondButtons" type="button" value="글  저장"	style="float: right; display: none;" onclick="saveText(this.form)" /> 
+						<input name="secondButtons"	type="button" value="취소" style="float: right; display: none;" onclick="cancel()" />
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+<script>
+function modifyText() {
+	document.getElementById('textBox').style.display = 'none';
+	$('#textBoxArea').summernote({
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true
+    });
+	document.getElementById('title').style.display ='none';
+	document.getElementById('titleModify').style.display = 'block';
+	document.getElementById('titleModify').style.border ='1px solid black';
+	Array.prototype.slice.call(document.getElementsByName("firstButtons"))
+	   .map(x => x.style.display = 'none');
+	Array.prototype.slice.call(document.getElementsByName("secondButtons"))
+	   .map(x => x.style.display = 'block');
+	//document.getElementById('summernote').style.display = 'block';
+}
+
+function cancel() {
+	location.reload();
+}
+
+
+function deleteText() {
+	if(!confirm("글 내용과 댓글이 모두 지워집니다. 정말로 삭제하시겠습니까?")){
+		return;
+	}
+	let diaryCd = document.getElementById("diaryCd").getAttribute("value");
+	location.href = `/diaryBoard/delete?value=${diaryCd}`;
+	
+}
+
+
+
+function saveText(frm) {	
+	frm.submit();
+	//console.log(frm);
+}
+
+
+
+function plusZero(dateOrtimes) {
+	if(dateOrtimes.toString().length !=2) {
+		dateOrtimes = "0"+dateOrtimes;
+	}	
+	return dateOrtimes;	
+}
+
+</script>
+
+
+
+	<footer th:replace="/fragment/footer :: footer"> </footer>
+
+
+
+</body>
+</html>

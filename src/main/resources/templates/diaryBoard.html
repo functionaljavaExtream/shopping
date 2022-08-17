@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/product/# -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Board</title>
+
+<!-- jquery -->
+<script src='../jquery/jquery.js'></script>
+
+<!-- Bootstrap core CSS -->
+<script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+
+<link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"
+	id="bootstrap-css">
+<link href="../bootstrap/dist/css/product.css" rel="stylesheet"
+	id="product-css">
+
+</head>
+
+
+<style>
+.main-index {
+	background-color: gray;
+	height: 100px;
+}
+
+.mid-block {
+	top: 10px;
+	background-color: silver;
+	height: 400px;
+	width: 455px;
+	border: 1px solid black;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.mid-block-left {
+	margin-right: 10px;
+}
+
+.mid-block-right {
+	float: right;
+	margin-left: 10px;
+}
+
+.board-block {
+	top: 10px;
+	background-color: silver;
+	border: 1px solid black;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.hr-marginNone {
+	margin: 0;
+}
+
+.writebutton {
+	float: right;
+	font-size: 20px;
+	margin-top: 15px;
+}
+
+.center {
+	margin-right: auto;
+	margin-left: auto;
+	width: 100px;
+}
+</style>
+
+
+
+
+<body>
+
+	<header th:replace="/fragment/header :: header"> </header>
+
+	<div class="container">
+		<div class="main-index">
+			<h1 class="">Welcome!</h1>
+			<p class="">private diary board!</p>
+		</div>
+	</div>
+
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-7">
+				<h1 class="">DiaryBoard</h1>
+			</div>
+			<div class="col-sm-5">
+				<h1 class="">
+					<a class="writebutton" href="/diaryBoardwrite">write</a>
+				</h1>
+			</div>
+		</div>
+
+
+
+		<hr class="hr-marginNone"
+			style="height: 2px; border-width: 0; color: gray; background-color: black">
+		<div class="row">
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;">No.</p>
+			</div>
+			<div class="col-sm-1 text-center" style="margin: 0px;">
+				<p style="margin: 0px;">check</p>
+			</div>
+			<div class="col-sm-3 text-center" style="margin: 0px;">
+				<p style="margin: 0px;">Title</p>
+			</div>
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;">User</p>
+			</div>
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;">Date</p>
+			</div>
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;">view</p>
+			</div>
+		</div>
+
+		<hr class="hr-marginNone"
+			style="height: 2px; border-width: 0; color: gray; background-color: black">
+		<!-- text spreading? -->
+		<div class="row" th:each="item : ${diaryList}">
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;" th:text="${item.diaryCd}"></p>
+			</div>
+			<div class="col-sm-1 text-center" style="margin: 0px;">
+				<p style="margin: 0px;">일기</p>
+			</div>
+			<div class="col-sm-3 text-center" style="margin: 0px;">
+				<a style="margin: 0px;" th:text="${item.diaryTitle}"
+					th:href="@{/diaryBoard/read(value=${item.diaryCd})}"></a>
+			</div>
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;" th:text="${item.writer.userId}"></p>
+			</div>
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;"
+					th:text="${#strings.substring(item.updateDatetime,2,16)}"></p>
+			</div>
+			<div class="col-sm-2 text-center" style="margin: 0px;">
+				<p style="margin: 0px;" th:text="${item.viewCount}"></p>
+			</div>
+		</div>
+		<hr class="hr-marginNone"
+			style="height: 1px; border-width: 0; color: gray; background-color: silver">
+
+		<div class="center">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+				  <th:block th:if="${allPageNo == 0}">
+				  	<li class="page-item"><a class="page-link"
+						th:href="@{/diaryBoard/main(pageNo=0)}" th:text="1"></a></li>
+				  </th:block>
+				  <th:block th:unless="${allPageNo == 0}">
+      				<th:block th:each="num : ${#numbers.sequence(1,allPageNo)}">
+						<li class="page-item"><a class="page-link"
+							th:href="@{/diaryBoard/main(pageNo=${num-1})}" th:text="${num}"></a></li>
+					</th:block>
+					
+					 </th:block>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+	<footer th:replace="/fragment/footer :: footer"> </footer>
+
+	<script>
+		function readText(text) {
+			//location.href = `/board/read?value=${v}`;
+			alert(text);
+		}
+	</script>
+
+</body>
+</html>

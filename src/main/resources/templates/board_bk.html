@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/product/# -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Board</title>
+      
+  <!-- jquery -->
+   <script src='../jquery/jquery.js'></script>
+
+    <!-- Bootstrap core CSS -->
+       <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+      
+     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+     <link href="../bootstrap/dist/css/product.css" rel="stylesheet" id="product-css">  
+      
+  </head>
+
+
+<style>
+.main-index {
+  background-color: gray;
+  
+  height: 100px;
+
+}
+
+.mid-block {
+  top:10px;
+  
+  background-color: silver;
+  height: 400px;
+  width: 455px;
+  border: 1px solid black;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.mid-block-left {
+  margin-right: 10px;
+
+
+}
+
+.mid-block-right {
+  float: right;
+  margin-left: 10px;
+
+
+}
+
+.board-block {
+
+  top:10px;
+  
+  background-color: silver;
+  
+    border: 1px solid black;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.hr-marginNone {
+ margin: 0;
+
+}
+
+
+.writebutton {
+float: right;
+font-size: 20px;
+margin-top: 15px;
+}
+
+
+</style>
+
+
+
+
+<body>
+
+
+<nav class="site-header"> 
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-1">
+            <a class="" href="/" aria-label="Product">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10"></circle><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path></svg>
+            </a>
+          </div>
+          <div class="col-sm-1">
+              <a class="" href="">Profile</a>
+          </div>
+        
+          <div class="col-sm-1">
+            <a class="" href="/board">Board</a>
+          </div>
+  
+          <div th:if="${user}">
+          
+
+					<div class="col-sm-1" style="float: right;">
+						<a class="" href="/logout">logout</a>
+					</div>
+
+					<div class="col-sm-1" style="float: right;">
+						<a class="" data-toggle="modal" data-target="#profileModal"
+							href="" th:text="${user.userId}"></a>
+					</div>
+
+          </div>
+          
+          <div th:unless="${user}">
+          <div class="col-sm-1" style="float: right;">
+            <a class="" href="/loginpage">login</a>
+          </div>
+          </div>
+          
+       </div>
+     </div>
+  </nav>
+
+
+
+
+  
+<div class="container">
+  <div class="main-index">
+    <h1 class="">Welcome!</h1>
+    <p class="">Welcome to my board!</p>
+  </div>
+</div>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-7">
+          <h1 class="">Board</h1>
+    </div>
+    <div class="col-sm-5">
+      <h1 class="">
+          <a class="writebutton"  href="/boardwrite">write</a>
+      </h1>
+    </div>
+  </div>
+
+
+      
+      <hr class ="hr-marginNone" style="height:2px;border-width:0;color:gray;background-color:black">
+  <div class="row">
+    <div class="col-sm-2 text-center"  style="margin:0px;">
+      <p style="margin:0px;">No.</p>
+    </div>
+    <div class="col-sm-1 text-center" style="margin:0px;">
+      <p style="margin:0px;">check</p>
+    </div>
+    <div class="col-sm-3 text-center" style="margin:0px;">
+      <p style="margin:0px;">Title</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">User</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">Date</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">view</p>
+    </div>
+  </div>
+  
+     <hr  class ="hr-marginNone" style="height:2px;border-width:0;color:gray;background-color:black">
+
+  <div class="row">
+    <div class="col-sm-2 text-center"  style="margin:0px;">
+      <p style="margin:0px;">No.</p>
+    </div>
+    <div class="col-sm-4 text-center" style="margin:0px;">
+      <p style="margin:0px;">Title</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">User</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">Date</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">view</p>
+    </div>
+  </div>
+       <hr  class ="hr-marginNone" style="height:1px;border-width:0;color:gray;background-color:silver">
+    
+    
+    
+    <div class="row">
+    <div class="col-sm-2 text-center"  style="margin:0px;">
+      <p style="margin:0px;">No.</p>
+    </div>
+    <div class="col-sm-4 text-center" style="margin:0px;">
+      <p style="margin:0px;">Title</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">User</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">Date</p>
+    </div>
+    <div class="col-sm-2 text-center" style="margin:0px;">
+      <p style="margin:0px;">view</p>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+<footer class="container">
+  <div class="row">
+     <div class="col-md-5 ">
+      <h1 class="">Copyrights</h1>
+      <p class="">Kim</p>
+    </div>
+
+  </div>
+</footer>
+
+</body></html>

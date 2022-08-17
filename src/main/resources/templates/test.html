@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Index</title>
+      
+  <!-- jquery -->
+   <script src='../jquery/jquery.js'></script>
+
+    <!-- Bootstrap core CSS -->
+     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">   
+      <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+      
+      
+  </head>
+
+
+<body>
+  <header th:replace="/fragment/header :: header"> </header>
+  
+  <div class="container" >
+     <form action="/test/testInsert">
+       <input type="text" id="testId" name="testId" placeholder="testId">
+       <input type="text" id="testName" name="testName" placeholder="testName">
+       <input  type="submit" style="width: 400px;" value="insert"/>
+  
+     </form> 
+  </div>
+</body>
+</html>

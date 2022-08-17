@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.4/examples/product/# -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title>Boardwrite</title>
+      
+<!-- include libraries(jQuery, bootstrap) -->
+  <!-- jquery -->
+  
+   <script src='../jquery/jquery.js'></script>
+
+    <!-- Bootstrap core CSS -->
+       <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+      
+     <link href="../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+     <link href="../bootstrap/dist/css/product.css" rel="stylesheet" id="product-css">  
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+      
+  </head>
+
+
+<style>
+.main-index {
+  background-color: gray;
+  
+  height: 100px;
+
+}
+
+.mid-block {
+  top:10px;
+  
+  background-color: silver;
+  height: 400px;
+  width: 455px;
+  border: 1px solid black;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.mid-block-left {
+  margin-right: 10px;
+
+
+}
+
+.mid-block-right {
+  float: right;
+  margin-left: 10px;
+
+
+}
+
+.board-block {
+
+  top:10px;
+  
+  background-color: silver;
+  
+    border: 1px solid black;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.hr-marginNone {
+ margin: 0;
+
+}
+
+
+.writebutton {
+float: right;
+font-size: 20px;
+margin-top: 15px;
+}
+
+
+</style>
+
+
+
+
+<body>
+
+<header th:replace="/fragment/header :: header"> </header>
+
+
+  
+<div class="container">
+  <div class="main-index">
+    <h1 class="">Welcome!</h1>
+    <p class="">Welcome to my board!</p>
+  </div>
+</div>
+
+
+<form method="post" action="/diaryBoard/write">
+<div class="container" style="margin-top: 30px;">
+         <div th:if="${user}">
+             <input readonly type="text" id="writer" name="writer" style="width: 200px; background-color: silver;"  th:value="${user.userId}"> 
+         </div>
+          
+         <div th:unless="${user}">
+             <input type="text" id="writer" name="writer" style="width: 200px;" placeholder="글쓴이"> 
+         </div>
+
+
+
+  <input type="text" id="title" name="title" style="width: 700px;" placeholder="글 제목">  
+
+<div style=" margin: auto;">
+
+		<textarea id="summernote" name="content"></textarea>
+		<input id="subBtn" type="button" value="글 작성" style="float: right;" onclick="writeText(this.form)"/>
+
+</div>
+
+</div>
+	</form>
+<script>
+$(document).ready(function() {
+	$('#summernote').summernote({
+		  height: 300,                 // 에디터 높이
+		  minHeight: null,             // 최소 높이
+		  maxHeight: null,             // 최대 높이
+		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+        
+	})
+});
+
+
+function writeText(frm) {	
+	frm.submit();
+}
+</script>
+
+<footer th:replace="/fragment/footer :: footer"> </footer>
+</body></html>
